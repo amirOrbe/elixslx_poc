@@ -34,7 +34,11 @@ defmodule Xlsx.Builder do
       "title",
       "views",
       "inserted_at",
-      "updated_at"
+      "updated_at",
+      "value",
+      "total of value",
+      "date format",
+      "number format"
     ]
   end
 
@@ -42,10 +46,12 @@ defmodule Xlsx.Builder do
     posts =
       Enum.map(1..100, fn n ->
         [
-          "ngihgirg",
           n,
+          "ngihgirg",
+          n + 1,
           "#{NaiveDateTime.utc_now()}",
-          "#{NaiveDateTime.utc_now()}"
+          "#{NaiveDateTime.utc_now()}",
+          1
         ]
       end)
 
@@ -53,12 +59,20 @@ defmodule Xlsx.Builder do
   end
 
   def build_xlsx_file do
-    posts = get_posts()
+    posts = fake_post_list()
 
-    sheet = %Sheet{
-      name: "Posts",
-      rows: posts
-    }
+    sheet =
+      %Sheet{
+        name: "Posts",
+        rows: posts
+      }
+      |> Sheet.set_cell("G2", {:formula, "SUM(F2:F101)"},
+        num_format: "0.00",
+        bold: true
+      )
+      |> Sheet.set_cell("H2", {:formula, "NOW()"}, num_format: "yy-mm-dd")
+      |> Sheet.set_cell("I2", Enum.random(1..10), num_format: "0.0000")
+      |> Sheet.set_cell("J2", {:formula, "CONCAT(B2:B101)"})
 
     workbook = %Workbook{sheets: [sheet]}
 

@@ -2,7 +2,6 @@ defmodule ElixslxTestWeb.ElixlsxController do
   use ElixslxTestWeb, :controller
   require Elixlsx
 
-  alias Elixlsx.{Sheet, Workbook}
   alias Xlsx.Builder
 
   def download(conn, _params) do
