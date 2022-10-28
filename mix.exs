@@ -7,7 +7,7 @@ defmodule ElixslxTest.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -20,7 +20,7 @@ defmodule ElixslxTest.MixProject do
   def application do
     [
       mod: {ElixslxTest.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :faker]
     ]
   end
 
@@ -49,7 +49,8 @@ defmodule ElixslxTest.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:elixlsx, "~> 0.5.1"}
+      {:elixlsx, "~> 0.5.1"},
+      {:faker, "~> 0.17", only: [:test, :dev]}
     ]
   end
 
