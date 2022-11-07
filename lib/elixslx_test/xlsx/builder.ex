@@ -66,7 +66,7 @@ defmodule Xlsx.Builder do
         name: "Posts",
         rows: posts
       }
-      |> Sheet.set_cell("G2", {:formula, "SUM(F2:F101)"},
+      |> Sheet.set_cell("F#{length(posts) + 1}", {:formula, "SUM(F2:F101)"},
         num_format: "0.00",
         bold: true
       )
