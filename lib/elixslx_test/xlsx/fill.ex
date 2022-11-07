@@ -10,7 +10,7 @@ defmodule ElixslxTest.Xlsx.Fill do
       |> NaiveDateTime.truncate(:second)
 
     list_of_posts =
-      1..500_000
+      1..10_000
       |> Stream.map(fn _ ->
         generate_post(date)
       end)

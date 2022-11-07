@@ -61,7 +61,7 @@ defmodule Xlsx.Builder do
   def build_xlsx_file do
     posts = fake_post_list()
 
-    sheet =
+    sheet_1 =
       %Sheet{
         name: "Posts",
         rows: posts
@@ -74,7 +74,18 @@ defmodule Xlsx.Builder do
       |> Sheet.set_cell("I2", Enum.random(1..10), num_format: "0.0000")
       |> Sheet.set_cell("J2", {:formula, "CONCAT(B2:B101)"})
 
-    workbook = %Workbook{sheets: [sheet]}
+    sheet_2 =
+      %Sheet{
+        name: "Totals",
+        rows: [["Total", "Concat"]]
+      }
+      |> Sheet.set_cell("A2", {:formula, "SUM(Posts!F2:F101)"},
+        num_format: "0.00",
+        bold: true
+      )
+      |> Sheet.set_cell("B2", {:formula, "CONCAT(Posts!B2:B101)"})
+
+    workbook = %Workbook{sheets: [sheet_1, sheet_2]}
 
     {:ok, {_, data_xlsx}} = Elixlsx.write_to_memory(workbook, "example.xlsx")
 
