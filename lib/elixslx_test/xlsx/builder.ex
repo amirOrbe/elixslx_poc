@@ -60,13 +60,14 @@ defmodule Xlsx.Builder do
 
   def build_xlsx_file do
     posts = fake_post_list()
+    length_list = length(posts)
 
     sheet_1 =
       %Sheet{
         name: "Posts",
         rows: posts
       }
-      |> Sheet.set_cell("F#{length(posts) + 1}", {:formula, "SUM(F2:F101)"},
+      |> Sheet.set_cell("#{<<70>>}#{length_list + 1}", {:formula, "SUM(F2:F101)"},
         num_format: "0.00",
         bold: true
       )
